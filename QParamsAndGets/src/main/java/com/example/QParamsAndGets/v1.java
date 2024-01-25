@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class v1 {
     @GetMapping(path = "/ciao")
-    public String dati (@RequestParam String nome, String provincia){
+    public String dati (
+            @RequestParam(required = true) String nome, String provincia){
         return "Ciao " + nome + ", com'è il tempo in " + provincia + "?";
     }
 }
