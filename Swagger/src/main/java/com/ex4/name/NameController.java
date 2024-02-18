@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
-@Tag (name= "Book controller")
+@Tag (name= "Name controller")
 public class NameController {
     @GetMapping("/")
     @Operation(description = "prints the name straight")
