@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/v1")
-@Tag (name= "Book controller")
+@Tag (name= "Name controller")
 public class NameController {
     @GetMapping("/")
     @Operation(description = "prints the name straight")
