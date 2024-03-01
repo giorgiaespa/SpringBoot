@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Entity
 public class ClassesEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NonNull
