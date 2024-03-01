@@ -10,7 +10,7 @@ import lombok.NonNull;
 @Entity
 public class StudentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NonNull
