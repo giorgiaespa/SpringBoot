@@ -1,0 +1,12 @@
+server:
+  port: 5050
+
+---
+environment: test
+server:
+  port: 4000
+
+---
+environment: prod
+server:
+  port: 7070
