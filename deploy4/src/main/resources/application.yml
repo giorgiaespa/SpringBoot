@@ -1,8 +1,12 @@
 environment: test
 server:
   port: 4000
+property:
+  welcomeMsg: Hello from Test
 
 ---
 environment: prod
 server:
   port: 5000
+property:
+  welcomeMsg: Hello from Prod
