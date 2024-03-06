@@ -9,39 +9,31 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1")
 public class StudentController {
-//    @Autowired
-//    private StudentRepository studentRepository;
-
     @Autowired
     private StudentService studentService;
 
     @PostMapping("/newStudent")
     private @ResponseBody Student createStudent(@RequestBody Student student) {
-        return studentService.saveStudent.h(student);
+        return studentService.newStudent(student);
     }
 
     @GetMapping("/getAll")
     private @ResponseBody List<Student>readAll (){
-        return studentRepository.findAll();
+        return studentService.findAll();
     }
 
     @GetMapping("/getById/{id}")
     private @ResponseBody Student readStudent (@PathVariable Long id){
-        Optional <Student> student = studentRepository.findById(id);
-        return student.orElse(null);
+        return studentService.findOne(id);
     }
 
-    @PatchMapping("/updatePK/{id}")
-    private @ResponseBody Student updateId (
-            @PathVariable long id,
-            @RequestBody Student student
-    ) {
-        if (student != null) {
-            student.setId(id);
-             return studentRepository.saveAndFlush(student);
-        }
-        return null;
-    }
+//    @PatchMapping("/updatePK/{id}")
+//    private @ResponseBody Student updateId (
+//            @PathVariable long id,
+//            @RequestBody Student student
+//    ) {
+//        return studentService.newId(id, student);
+//    }
 
     @PatchMapping("/{id}/updateStatus")
     private Student isWorking (
@@ -53,10 +45,6 @@ public class StudentController {
 
     @DeleteMapping("/delete/{id}")
     private void deleteById (@PathVariable Long id) {
-        studentRepository.deleteById(id);
+        studentService.deletedById(id);
     }
-
-
-
-
 }
