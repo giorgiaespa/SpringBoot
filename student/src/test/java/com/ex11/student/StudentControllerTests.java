@@ -32,7 +32,7 @@ class StudentCrudTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private Student createStudent () throws Exception {
+	private Student createStudent() throws Exception {
 		Student mockStudent = new Student();
 		mockStudent.setName("Zachary");
 		mockStudent.setSurname("Johnson");
@@ -40,34 +40,38 @@ class StudentCrudTests {
 
 		return createStudentb(mockStudent);
 	}
-	private Student createStudentb (Student mockStudent) throws Exception {
-		MvcResult mvcResult = createStudentRequest();
-        return objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Student.class);
-	}
-	private MvcResult createStudentRequest () throws Exception {
-		Student mockStudent = new Student();
-		mockStudent.setName("Zachary");
-		mockStudent.setSurname("Johnson");
-		mockStudent.setIsWorking(true);
 
+	private Student createStudentb(Student mockStudent) throws Exception {
+		MvcResult mvcResult = createStudentRequest(mockStudent);
+		Student idk = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Student.class);
+		assertThat(idk.getId()).isNotNull();
+		assertThat(idk).isNotNull();
+		return idk;
+	}
+
+	private MvcResult createStudentRequest(Student mockStudent) throws Exception {
+		if (mockStudent == null) return null;
 		String studentJSON = objectMapper.writeValueAsString(mockStudent);
 
-		return this.mockMvc.perform(post("/v1/newStudent")
+		return this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/newStudent")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content(studentJSON))
+						.content(studentJSON)
+						.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andReturn();
 	}
 
-	private Student readById (Long id) throws Exception {
+	private Student readById(Long id) throws Exception {
 		MvcResult mvcResult = this.mockMvc.perform(get("/v1/getById/" + id))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andReturn();
 
 
-		if (mvcResult.getResponse().getContentLength() == 0){return null;}
+		if (mvcResult.getResponse().getContentLength() == 0) {
+			return null;
+		}
 		String studentJSON = mvcResult.getResponse().getContentAsString();
 		return objectMapper.readValue(studentJSON, Student.class);
 	}
@@ -78,28 +82,28 @@ class StudentCrudTests {
 	}
 
 	@Test
-	void createStudentTest () throws Exception {
+	void createStudentTest() throws Exception {
 		Student studentFromResponse = createStudent();
 		assertThat(studentFromResponse.getId()).isNotNull();
 	}
 
 	@Test
-	void readAllTest () throws Exception {
-		createStudentRequest();
+	void readAllTest() throws Exception {
+		createStudentRequest(new Student());
 
 		MvcResult mvcResult = this.mockMvc.perform(get("/v1/getAll"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andReturn();
 
-		List <Student> students = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), List.class);
+		List<Student> students = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), List.class);
 		assertThat(students.size()).isNotZero();
 
 		System.out.println("Students in db are " + students.size());
 	}
 
 	@Test
-	void readOneTest () throws Exception {
+	void readOneTest() throws Exception {
 		Student student = createStudent();
 		assertThat(student.getId()).isNotNull();
 
@@ -108,12 +112,13 @@ class StudentCrudTests {
 				.andExpect(status().isOk())
 				.andReturn();
 
-		Student student1 = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Student.class);;
+		Student student1 = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Student.class);
+		;
 		assertThat(student1.getId()).isEqualTo(student.getId());
 	}
 
 	@Test
-	void updateStudentStatusTest () throws Exception {
+	void updateStudentStatusTest() throws Exception {
 		Student student = createStudent();
 		assertThat(student.getId()).isNotNull();
 
@@ -135,7 +140,7 @@ class StudentCrudTests {
 	}
 
 	@Test
-	void deleteStudentTest () throws Exception {
+	void deleteStudentTest() throws Exception {
 		Student student = createStudent();
 		assertThat(student.getId()).isNotNull();
 
@@ -147,10 +152,4 @@ class StudentCrudTests {
 		Student studentFR = readById(student.getId());
 		assertThat(studentFR).isNull();
 	}
-
-
 }
-
-
-
-
