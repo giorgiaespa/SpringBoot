@@ -9,15 +9,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1")
 public class StudentController {
-    @Autowired
-    private StudentRepository studentRepository;
+//    @Autowired
+//    private StudentRepository studentRepository;
 
     @Autowired
     private StudentService studentService;
 
     @PostMapping("/newStudent")
     private @ResponseBody Student createStudent(@RequestBody Student student) {
-        return studentRepository.saveAndFlush(student);
+        return studentService.saveStudent.h(student);
     }
 
     @GetMapping("/getAll")
