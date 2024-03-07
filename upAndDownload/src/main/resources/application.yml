@@ -5,7 +5,6 @@ spring:
     password: "UserPassword123(:"
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,7 +18,7 @@ spring:
       fail-on-empty-beans: false
 
 
-uploadDir: ${user.dir}\src\main\resources\upload
+uploadDir: ${user.dir}\src\main\resources
 
 
 
