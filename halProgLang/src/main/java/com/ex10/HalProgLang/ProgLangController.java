@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1")
 public class ProgLangController {
-    @Autowired
-    ProgLangRepository progLangRepository;
 
     @Autowired
     private ProgLangService progLangService;
 
     @PostMapping("/new")
     private ProgLang createProgLang (@RequestBody ProgLang progLang){
-        return progLangRepository.saveAndFlush(progLang);
+        return progLangService.newProgLang(progLang);
     }
 
     @GetMapping("/getAllPaginated")
@@ -29,11 +27,7 @@ public class ProgLangController {
             @PathVariable Long id,
             @RequestBody ProgLang newInventor
     ) {
-        if (newInventor != null) {
-            newInventor.setInventor("Giò");
-            return progLangRepository.saveAndFlush(newInventor);
-        }
-        return null;
+        return progLangService.changeInventor(newInventor);
     }
 
 }
